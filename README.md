@@ -1,7 +1,9 @@
 To Run Bot:
 
 Open Command Line at folder
+
     npm i twit
+    
     node bot.js
 
 The bot should immediatly tweet the previously saved message and then save a new one.
