@@ -1,5 +1,7 @@
 To Run Bot:
 
+You will need a Google Maps API key that has the Geocode and Places APIs enabled. You can get one from here: https://developers.google.com/maps/documentation/javascript/get-api-key
+
 Open Command Line at folder
 
     npm i twit
