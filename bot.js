@@ -10,7 +10,7 @@ var foundCity = false;
 var foundCountry = false;
 var lat = (Math.random() * 180) - 90;
 var lng = (Math.random() * 180) - 90;
-var apiKey = "AIzaSyCevg6THIrAX0rpXyNmbZEWAmPOSdS25EA";
+var apiKey = "INSERT GOOGLE API KEY ENABLED FOR PLACES & GEOCODING HERE";
 var call = "https://maps.googleapis.com/maps/api/geocode/json?latlng=";
 var url = call + lat + "," + lng + "&key=" + apiKey;
 var message = "";
