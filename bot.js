@@ -2,12 +2,15 @@
 var Twit = require('twit');
 
 
-var T = new Twit(require('./config.js'));
+var T = new Twit({consumer_key:'j82XgsiCTa3qmymcLGdYAhxjh',
+    consumer_secret:'qfJOxXzSZXYdPFPQB6KaMRau1kecaBCLI2sNE3HoeFrqE75yoN',
+    access_token:'793683078392737792-LhRbg7WIsykGlUEXBRrUdoHe2zggx9L',
+    access_token_secret:'iNXhACqnoEGsi0WEdBtelemA3rk9zewsXvZ1iM8telMcM',});
 var foundCity = false;
 var foundCountry = false;
 var lat = (Math.random() * 180) - 90;
 var lng = (Math.random() * 180) - 90;
-var apiKey = "AIzaSyCUCZGjsW0qdOopeGGrWsekis90EOHSpLs";
+var apiKey = "AIzaSyCevg6THIrAX0rpXyNmbZEWAmPOSdS25EA";
 var call = "https://maps.googleapis.com/maps/api/geocode/json?latlng=";
 var url = call + lat + "," + lng + "&key=" + apiKey;
 var message = "";
@@ -18,7 +21,7 @@ var firstPart = {url: url, json: true};
 var placeURL;
 var placeFirstPart;
 var user = "";
-var prevUser = "Casttechnology";
+var prevUser = "CassieLynn777";
 var count = 0;
 var tags = [" #Vacation", " #PerfectPlace", " #Exploration", " #WondersOftheWorld", " #SmellTheRoses", " #TakeABreak", " #MustSee", " #Travel"];
 
@@ -28,7 +31,7 @@ function checkSearch() {
 	T.get('search/tweets', tagsSearch, function (error, data) {
 		console.log("Checking Tweets");
 	  // If our search request to the server had no errors...
-	  if (!error) {
+	  if (!error && data.statuses.length > 0) {
 	  	// ...then we grab the ID of the tweet we want to retweet...
 		var userName = data.statuses[0].user.screen_name;
 		if (userName != "travelbotcity" && userName != prevUser) {
@@ -58,7 +61,7 @@ function search() {
 	T.get('search/tweets', tagsSearch, function (error, data) {
 		console.log("Checking Tweets");
 	  // If our search request to the server had no errors...
-	  if (!error) {
+	  if (!error && data.statuses.length > 0) {
 	  	// ...then we grab the ID of the tweet we want to retweet...
 		var userName = data.statuses[0].user.screen_name;
 		if (userName != "travelbotcity" && userName != prevUser) {
@@ -79,7 +82,7 @@ function search() {
 
 
 //Decide whether to post random location or location from the array:
-var choice = true;
+var choice = false;
 function tweetTime() {
 	user = "";
 	if (choice) {
@@ -100,11 +103,11 @@ function tweetSpecific() {
 	"Bucharest", "Vienna", "Hamburg", "Salzburg", "Budapest", "Warsaw", "Barcelona", "Munich", "Milan", "Stockholm", "Malmo", "Copenhagen",
 	"Brussels", "Sofia", "Helsinki", "Athens", "Dublin", "Galsgow", "Amsterdam", "Lisbon", "Oxford", "Cardiff", "Seoul", "Tokyo", "Kyoto", "Delhi",
 	"Cairo", "Washington DC", "New York City"];
-	var countryList = ["United States", "France", "England", "Germany", "Italy", "Italy", "Italy", 
-	"Poland", "Czech Republic", "China", "Russia", "Turkey", "United States", "United States", "United States", "Spain",
+	var countryList = ["United+States", "France", "England", "Germany", "Italy", "Italy", "Italy", 
+	"Poland", "Czech+Republic", "China", "Russia", "Turkey", "United+States", "United+States", "United+States", "Spain",
 	"Romania", "Austria", "Germany", "Austria", "Hungary", "Poland", "Spain", "Germany", "Italy", "Sweden", "Sweden", "Denmark",
-	"Belgium", "Bulgaria", "Finland", "Greece", "Ireland", "Scotland", "Netherlands", "Portugal", "England", "Wales", "South Korea", "Japan", "Japan", "India",
-	"Egypt", "United States", "United States"];
+	"Belgium", "Bulgaria", "Finland", "Greece", "Ireland", "Scotland", "Netherlands", "Portugal", "England", "Wales", "South+Korea", "Japan", "Japan", "India",
+	"Egypt", "United+States", "United+States"];
 	var number = Math.floor(Math.random() * (cityList.length));
 	city = cityList[number];
 	country = countryList[number];
@@ -121,6 +124,7 @@ function tweetSpecific() {
 	message = city + ", " + country + "! #" + cityTag + tags[number];
 	placeURL = "https://maps.googleapis.com/maps/api/place/textsearch/xml?query=points+of+interst+in+" + city + "+" + country + "&key=" + apiKey;
     placeFirstPart = {url: placeURL, json: true};
+    console.log(url);
     request(placeFirstPart, placeDetails);
 }
 
@@ -137,6 +141,7 @@ var message = "None";
 var country = "";
 var city = "";
 var firstPart = {url: url, json: true};
+    console.log(url);
 	request(firstPart, getLocation);
 }
 
@@ -180,6 +185,7 @@ function getLocation(error, response, body) {
     			placeURL = "https://maps.googleapis.com/maps/api/place/textsearch/xml?query=points+of+interst+in+" + city + "+" + country + "&key=" + apiKey;
     			placeFirstPart = {url: placeURL, json: true};
     			request(placeFirstPart, placeDetails);
+                console.log(url);
     		} else {
     			console.log("Not Found");
 				lat = (Math.random() * 180) - 90;
@@ -187,6 +193,7 @@ function getLocation(error, response, body) {
 				url = call + lat + "," + lng + "&key=" + apiKey;
     			firstPart = {url: url, json: true};
     			request(firstPart, getLocation);
+                console.log(url);
     		}
     	} else {
     		console.log("Not Found");
@@ -195,6 +202,7 @@ function getLocation(error, response, body) {
 			url = call + lat + "," + lng + "&key=" + apiKey;
     		firstPart = {url: url, json: true};
     		request(firstPart, getLocation);
+            console.log(url);
     	}
     }
 }
@@ -219,7 +227,7 @@ function placeDetails(error, response, body) {
 			T.get('search/tweets', tagsSearch, function (error, data) {
 				console.log("Checking Tweets");
 	  			// If our search request to the server had no errors...
-	  			if (!error) {
+	  			if (!error && data.statuses.length > 0) {
 	  				// ...then we grab the ID of the tweet we want to retweet...
 					var userName = data.statuses[0].user.screen_name;
 					console.log("Checked: " + userName);
@@ -287,7 +295,7 @@ function placeDetails2(error, response, body) {
 			T.get('search/tweets', tagsSearch, function (error, data) {
 				console.log("Checking Tweets");
 	  			// If our search request to the server had no errors...
-	  			if (!error) {
+	  			if (!error && data.statuses.length > 0) {
 	  				// ...then we grab the ID of the tweet we want to retweet...
 					var userName = data.statuses[0].user.screen_name;
 					if (userName != "travelbotcity" && userName != prevUser) {
